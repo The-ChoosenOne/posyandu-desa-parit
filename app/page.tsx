@@ -1,65 +1,62 @@
-import Image from "next/image";
+'use client'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-white">
+      {/* NAVBAR KHUSUS LANDING PAGE */}
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">🌱</span>
+            <h1 className="text-xl font-black text-green-600 tracking-tighter uppercase">Posyandu Parit</h1>
+          </div>
+          <Link 
+            href="/login" 
+            className="bg-green-600 text-white px-6 py-2.5 rounded-2xl font-black text-xs shadow-lg shadow-green-100 hover:scale-105 transition-all uppercase"
+          >
+            Login Kader
+          </Link>
+        </div>
+      </nav>
+
+      {/* HERO SECTION */}
+      <section className="py-20 px-6 text-center bg-gradient-to-b from-green-50/50 to-white">
+        <div className="inline-block bg-white border border-green-100 text-green-600 px-4 py-1.5 rounded-full text-[10px] font-black mb-6 uppercase tracking-widest shadow-sm">
+          📍 Desa Parit, Indralaya Utara
+        </div>
+        <h1 className="text-4xl md:text-6xl font-black text-gray-900 leading-[1.1]">
+          Layanan Digital <br/>
+          <span className="text-green-600">Kesehatan Ibu & Anak</span>
+        </h1>
+        <p className="mt-6 text-gray-500 max-w-lg mx-auto text-sm md:text-base leading-relaxed font-medium">
+          Memudahkan kader dalam mencatat data timbangan dan memantau tumbuh kembang balita secara akurat.
+        </p>
+      </section>
+
+      {/* INFO JADWAL & KEGIATAN */}
+      <section className="py-12 px-6 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+          <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-2xl mb-5">📅</div>
+          <h3 className="font-black text-gray-800 text-xl mb-3">Jadwal Kegiatan</h3>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            Setiap **Selasa Minggu Kedua** <br/> Pukul 08.00 - 12.00 WIB <br/> di Balai Desa Parit.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+          <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl mb-5">📝</div>
+          <h3 className="font-black text-gray-800 text-xl mb-3">Persyaratan</h3>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            Wajib membawa **Buku KIA (Buku Pink)** dan Kartu Keluarga untuk pendaftaran balita baru.
+          </p>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <footer className="py-20 text-center">
+        <p className="text-gray-300 text-[10px] font-black uppercase tracking-[0.3em]">
+          &copy; 2026 KKN UIN Raden Fatah
+        </p>
+      </footer>
+    </main>
   );
 }
