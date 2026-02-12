@@ -76,22 +76,22 @@ export default function PeriksaIbuHamil() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">BB (kg)</label>
-                <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={bb} onChange={(e) => setBb(e.target.value)} placeholder="0.0" required />
+                <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={bb} onChange={(e) => setBb(e.target.value)} placeholder="0.0" required />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">L. Perut (cm)</label>
-                <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lPerut} onChange={(e) => setLPerut(e.target.value)} placeholder="0.0" required />
+                <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lPerut} onChange={(e) => setLPerut(e.target.value)} placeholder="0.0" required />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">LiLA (cm)</label>
-                <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lLengan} onChange={(e) => setLLengan(e.target.value)} placeholder="0.0" required />
+                <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lLengan} onChange={(e) => setLLengan(e.target.value)} placeholder="0.0" required />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">DJJ (bpm)</label>
-                <input type="number" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={jantung} onChange={(e) => setJantung(e.target.value)} placeholder="0" required />
+                <input type="number" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={jantung} onChange={(e) => setJantung(e.target.value)} placeholder="0" required />
               </div>
             </div>
 
@@ -107,7 +107,7 @@ export default function PeriksaIbuHamil() {
           
           {riwayat.length === 0 ? (
             <div className="bg-white p-10 rounded-[2.5rem] border-2 border-dashed border-gray-100 text-center">
-              <p className="text-gray-300 font-bold text-xs uppercase italic tracking-widest">Belum ada data history, Ki.</p>
+              <p className="text-gray-300 font-bold text-xs uppercase italic tracking-widest">Belum ada data history.</p>
             </div>
           ) : (
             riwayat.map((item, index) => (

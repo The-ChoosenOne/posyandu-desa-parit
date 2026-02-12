@@ -46,7 +46,7 @@ function EditContent() {
 
 const handleHapusProfil = async () => {
   const jenis = isIbu ? 'Ibu Hamil' : 'Balita'
-  const yakin = confirm(`Yakin mau hapus data ${jenis} ini, Ki? Semua riwayat periksanya juga bakal ikut kehapus loh.`)
+  const yakin = confirm(`Yakin mau hapus data ${jenis} ini? Semua riwayat periksanya juga bakal ikut terhapus.`)
   
   if (yakin) {
     setLoading(true)
@@ -77,11 +77,11 @@ const handleHapusProfil = async () => {
         <form onSubmit={handleUpdate} className="p-8 space-y-6">
           <div className="space-y-1">
             <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2">Nama Lengkap</label>
-            <input type="text" className={`w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-${colorTheme}-500 font-bold border border-gray-100 uppercase`} value={nama} onChange={(e) => setNama(e.target.value)} required />
+            <input type="text" className={`w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-${colorTheme}-500 font-bold border border-gray-100 uppercase`} value={nama} onChange={(e) => setNama(e.target.value)} required />
           </div>
           <div className="space-y-1">
             <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2">NIK</label>
-            <input type="number" className={`w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-${colorTheme}-500 font-bold border border-gray-100`} value={nik} onChange={(e) => setNik(e.target.value)} required />
+            <input type="number" className={`w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-${colorTheme}-500 font-bold border border-gray-100`} value={nik} onChange={(e) => setNik(e.target.value)} required />
           </div>
           <button disabled={loading} className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black uppercase text-xs shadow-xl active:scale-95 transition-all">
             {loading ? 'Menyimpan...' : 'Update Profil'}
@@ -100,7 +100,7 @@ const handleHapusProfil = async () => {
     type="button" 
     // Logika Pintar: Kalau isIbu true, lari ke tab ibu. Kalau false, lari ke tab balita.
     onClick={() => router.push(`/daftar-balita?tab=${isIbu ? 'ibu' : 'balita'}`)} 
-    className={`w-full py-4 bg-white border-2 border-${isIbu ? 'pink' : 'green'}-100 text-${isIbu ? 'pink' : 'green'}-500 rounded-2xl font-black text-xs uppercase tracking-widest shadow-sm`}
+    className={`w-full py-4 bg-white text-gray-900 border-2 border-${isIbu ? 'pink' : 'green'}-100 text-${isIbu ? 'pink' : 'green'}-500 rounded-2xl font-black text-xs uppercase tracking-widest shadow-sm`}
   >
     ← Kembali ke Daftar {isIbu ? 'Ibu' : 'Balita'}
   </button>

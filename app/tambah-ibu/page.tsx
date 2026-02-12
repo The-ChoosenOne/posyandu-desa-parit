@@ -32,11 +32,11 @@ export default function TambahIbuHamil() {
         <form onSubmit={handleSimpan} className="p-8 space-y-6">
           <div className="space-y-1">
             <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2">Nama Lengkap Ibu</label>
-            <input type="text" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={nama} onChange={(e) => setNama(e.target.value)} required />
+            <input type="text" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={nama} onChange={(e) => setNama(e.target.value)} required />
           </div>
           <div className="space-y-1">
             <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2">NIK</label>
-            <input type="number" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={nik} onChange={(e) => setNik(e.target.value)} required />
+            <input type="number" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={nik} onChange={(e) => setNik(e.target.value)} required />
           </div>
           <button disabled={loading} className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all">
             {loading ? 'Mendaftarkan...' : 'Daftarkan Ibu Hamil'}

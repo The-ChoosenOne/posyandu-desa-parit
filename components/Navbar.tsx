@@ -13,7 +13,7 @@ export default function Navbar() {
   ]
 
   const handleLogout = async () => {
-    const confirm = window.confirm("Yakin mau keluar, Ki?")
+    const confirm = window.confirm("Yakin mau keluar?")
     if (confirm) {
       await supabase.auth.signOut()
       router.push('/')

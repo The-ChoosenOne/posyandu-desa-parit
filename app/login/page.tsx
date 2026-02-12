@@ -13,7 +13,7 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) alert("Email atau Password salah, Ki!")
+    if (error) alert("Email atau Password salah")
     else router.push('/daftar-balita')
     setLoading(false)
   }
@@ -39,8 +39,8 @@ export default function Login() {
           <div className="space-y-2">
             <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest">Kata Sandi</label>
             <input 
-              type="password" placeholder="••••••••"
-              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-green-500 border border-gray-100 transition-all font-medium"
+              type="password" placeholder="Password"
+              className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-green-500 border border-gray-100 transition-all font-medium"
               value={password} onChange={(e) => setPassword(e.target.value)} required 
             />
           </div>

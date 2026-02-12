@@ -32,7 +32,7 @@ function DaftarContent() {
     .gte('tgl_periksa', `${bulanIni}-01`)
 
   if (!laporan || laporan.length === 0) {
-    alert("Belum ada data pemeriksaan bulan ini, Ki!")
+    alert("Belum ada data pemeriksaan bulan ini!")
     return
   }
 
@@ -181,7 +181,7 @@ function DaftarContent() {
           })}
           {filteredData.length === 0 && (
             <div className="bg-white p-20 rounded-[3rem] border-4 border-dashed border-gray-100 text-center">
-               <p className="text-gray-300 font-black text-sm uppercase tracking-[0.3em] italic">Data Kosong, Ki.</p>
+               <p className="text-gray-300 font-black text-sm uppercase tracking-[0.3em] italic">Data Kosong.</p>
             </div>
           )}
         </div>

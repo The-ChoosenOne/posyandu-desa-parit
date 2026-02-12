@@ -38,8 +38,8 @@ export default function TambahBalita() {
             <div className="max-w-md mx-auto bg-white rounded-3xl shadow-xl p-8 mt-10">
                 <h1 className="text-2xl font-black text-gray-900 mb-6 text-center">Pendaftaran Balita</h1>
                 <form onSubmit={handleSimpan} className="space-y-6">
-                    <input type="text" placeholder="Nama Lengkap" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-green-500" value={nama} onChange={(e) => setNama(e.target.value)} required />
-                    <input type="number" placeholder="NIK (16 Digit)" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-green-500" value={nik} onChange={(e) => setNik(e.target.value)} required />
+                    <input type="text" placeholder="Nama Lengkap" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-green-500" value={nama} onChange={(e) => setNama(e.target.value)} required />
+                    <input type="number" placeholder="NIK (16 Digit)" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-green-500" value={nik} onChange={(e) => setNik(e.target.value)} required />
                     <button disabled={loading} className="w-full bg-green-600 text-white py-4 rounded-2xl font-black shadow-lg shadow-green-200">
                         {loading ? 'Menyimpan...' : 'Simpan Data'}
                     </button>
