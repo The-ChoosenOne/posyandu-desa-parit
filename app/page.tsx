@@ -29,9 +29,7 @@ export default function Home() {
           Layanan Digital <br/>
           <span className="text-green-600">Kesehatan Ibu & Anak</span>
         </h1>
-        <p className="mt-6 text-gray-500 max-w-lg mx-auto text-sm md:text-base leading-relaxed font-medium">
-          Memudahkan kader dalam mencatat data timbangan dan memantau tumbuh kembang balita secara akurat.
-        </p>
+        
       </section>
 
       {/* INFO JADWAL & KEGIATAN */}
@@ -40,14 +38,14 @@ export default function Home() {
           <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-2xl mb-5">📅</div>
           <h3 className="font-black text-gray-800 text-xl mb-3">Jadwal Kegiatan</h3>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Setiap **Selasa Minggu Kedua** <br/> Pukul 08.00 - 12.00 WIB <br/> di Balai Desa Parit.
+            Setiap bulan pada tanggal 10 <br/> Pukul 09.00 - 12.00 WIB <br/> di Balai Desa Parit.
           </p>
         </div>
         <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
           <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl mb-5">📝</div>
           <h3 className="font-black text-gray-800 text-xl mb-3">Persyaratan</h3>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Wajib membawa **Buku KIA (Buku Pink)** dan Kartu Keluarga untuk pendaftaran balita baru.
+            Wajib membawa **Buku KIA (Buku Pink)** dan Kartu Keluarga untuk pendaftaran.
           </p>
         </div>
       </section>

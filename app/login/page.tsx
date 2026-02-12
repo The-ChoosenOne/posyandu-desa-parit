@@ -32,7 +32,7 @@ export default function Login() {
             <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest">Alamat Email</label>
             <input 
               type="email" placeholder="email@kader.com"
-              className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-green-500 border border-gray-100 transition-all font-medium"
+              className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-green-500 transition-all font-medium"
               value={email} onChange={(e) => setEmail(e.target.value)} required 
             />
           </div>
