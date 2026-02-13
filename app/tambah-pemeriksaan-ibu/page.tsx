@@ -70,7 +70,6 @@ export default function PeriksaIbuHamil() {
             <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest">Lingkar Perut (cm)</label>
             <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lPerut} onChange={(e) => setLPerut(e.target.value)} required />
           </div>
-
           <div className="grid grid-cols-2 gap-4">
             {/* Lingkar Lengan */}
             <div className="space-y-1">
