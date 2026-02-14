@@ -6,33 +6,41 @@ import { useParams, useRouter } from 'next/navigation'
 export default function PeriksaIbuHamil() {
   const { id } = useParams()
   const router = useRouter()
-  const [ibu, setIbu] = useState<any>(null)
-  const [riwayat, setRiwayat] = useState<any[]>([]) // State untuk simpan list riwayat
   
-  const [bb, setBb] = useState('')
-  const [lPerut, setLPerut] = useState('')
-  const [lLengan, setLLengan] = useState('')
-  const [jantung, setJantung] = useState('')
+  // States Data Utama
+  const [ibu, setIbu] = useState<any>(null)
+  const [riwayat, setRiwayat] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [fetching, setFetching] = useState(true)
 
-  // 1. Ambil data profil & riwayat pemeriksaan
-  useEffect(() => {
-    async function getData() {
-      // Ambil profil ibu
-      const { data: dataIbu } = await supabase.from('ibu_hamil').select('*').eq('id', id).single()
-      if (dataIbu) setIbu(dataIbu)
+  // --- 10 STATE UNTUK BIDAN ---
+  const [bb, setBb] = useState('')
+  const [tb, setTb] = useState('')
+  const [tensi, setTensi] = useState('')
+  const [lila, setLila] = useState('')
+  const [tfu, setTfu] = useState('')
+  const [palpasi, setPalpasi] = useState('')
+  const [djj, setDjj] = useState('')
+  const [fe, setFe] = useState('')
+  const [tt, setTt] = useState('')
+  const [skrining, setSkrining] = useState('')
 
-      // Ambil riwayat pemeriksaan (urutkan dari yang terbaru)
-      const { data: dataRiwayat } = await supabase
-        .from('pemeriksaan_ibu')
-        .select('*')
-        .eq('id_ibu', id)
-        .order('tgl_periksa', { ascending: false })
-      
-      if (dataRiwayat) setRiwayat(dataRiwayat)
-    }
-    getData()
-  }, [id])
+  const getData = async () => {
+    setFetching(true)
+    const { data: dataIbu } = await supabase.from('ibu_hamil').select('*').eq('id', id).single()
+    if (dataIbu) setIbu(dataIbu)
+
+    const { data: dataRiwayat } = await supabase
+      .from('pemeriksaan_ibu')
+      .select('*')
+      .eq('id_ibu', id)
+      .order('tgl_periksa', { ascending: false })
+    
+    if (dataRiwayat) setRiwayat(dataRiwayat)
+    setFetching(false)
+  }
+
+  useEffect(() => { getData() }, [id])
 
   const handleSimpan = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,117 +49,195 @@ export default function PeriksaIbuHamil() {
     const { error } = await supabase.from('pemeriksaan_ibu').insert([
       {
         id_ibu: id,
+        tgl_periksa: new Date().toISOString().split('T')[0],
         berat_badan: parseFloat(bb),
-        lingkar_perut: parseFloat(lPerut),
-        lingkar_lengan: parseFloat(lLengan),
-        detak_jantung: parseInt(jantung),
-        tgl_periksa: new Date().toISOString().split('T')[0]
+        tinggi_badan: parseFloat(tb),
+        tensi_darah: tensi,
+        lila: parseFloat(lila),
+        tinggi_fundus: parseFloat(tfu),
+        letak_janin: palpasi,
+        djj: parseInt(djj),
+        tablet_fe: fe,
+        imunisasi_tt: tt,
+        skrining: skrining
       }
     ])
 
     if (error) {
-      alert("Error: " + error.message)
+      alert("Gagal simpan: " + error.message)
     } else {
-      alert('Data pemeriksaan berhasil disimpan!')
-      window.location.reload() // Refresh halaman biar riwayatnya langsung muncul di bawah
+      alert('Data Pemeriksaan Berhasil Dicatat!')
+      // Reset Form
+      setBb(''); setTb(''); setTensi(''); setLila(''); setTfu('');
+      setPalpasi(''); setDjj(''); setFe(''); setTt(''); setSkrining('');
+      getData()
     }
     setLoading(false)
   }
 
-  if (!ibu) return <p className="pt-32 text-center font-black text-pink-500 italic text-sm tracking-widest uppercase">Memuat Data Ibu...</p>
+  if (fetching) return <p className="pt-32 text-center font-black text-pink-500 animate-pulse">MEMUAT DATA...</p>
 
   return (
-    <main className="min-h-screen bg-gray-50 pt-32 p-6 pb-32">
+    <main className="min-h-screen bg-gray-50 pt-24 p-6 pb-32">
       <div className="max-w-md mx-auto space-y-8">
         
-        {/* CARD FORM INPUT */}
-        <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-rose-100">
-          <div className="bg-gradient-to-r from-pink-500 to-rose-400 p-8 text-white text-center">
-            <span className="text-4xl mb-2 block">🤰</span>
-            <h1 className="text-2xl font-black uppercase tracking-tight">{ibu.nama_ibu}</h1>
-            <p className="text-pink-100 text-[10px] font-bold uppercase tracking-widest mt-1 italic font-mono">Input Pemeriksaan Baru</p>
+        {/* HEADER PROFIL */}
+        <div className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-pink-100">
+          <div className="bg-pink-600 p-8 text-white text-center">
+            <h1 className="text-2xl font-black uppercase">{ibu?.nama_ibu}</h1>
+            <p className="text-pink-100 text-[10px] font-bold uppercase tracking-widest mt-1">Input 10 Data Pemeriksaan KIA</p>
           </div>
 
-          <form onSubmit={handleSimpan} className="p-8 space-y-5">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">BB (kg)</label>
-                <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={bb} onChange={(e) => setBb(e.target.value)} placeholder="0.0" required />
+          <form onSubmit={handleSimpan} className="p-8 space-y-8">
+            
+            {/* SEKSI 1: FISIK IBU */}
+            <div className="space-y-4">
+              <h2 className="text-[10px] font-black text-pink-500 bg-pink-50 p-2 px-3 rounded-full inline-block uppercase tracking-widest">1. Fisik Ibu</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">BB (kg)</label>
+                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={bb} onChange={(e) => setBb(e.target.value)} required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">TB (cm)</label>
+                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tb} onChange={(e) => setTb(e.target.value)} required />
+                </div>
               </div>
-              <div className="space-y-1">
-                <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">L. Perut (cm)</label>
-                <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lPerut} onChange={(e) => setLPerut(e.target.value)} placeholder="0.0" required />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Tensi (mmHg)</label>
+                  <input type="text" placeholder="120/80" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tensi} onChange={(e) => setTensi(e.target.value)} required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">LiLA (cm)</label>
+                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={lila} onChange={(e) => setLila(e.target.value)} required />
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">LiLA (cm)</label>
-                <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={lLengan} onChange={(e) => setLLengan(e.target.value)} placeholder="0.0" required />
+            {/* SEKSI 2: KONDISI JANIN */}
+            <div className="space-y-4 pt-4 border-t border-dashed">
+              <h2 className="text-[10px] font-black text-pink-500 bg-pink-50 p-2 px-3 rounded-full inline-block uppercase tracking-widest">2. Kondisi Janin</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">T. Fundus (cm)</label>
+                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tfu} onChange={(e) => setTfu(e.target.value)} required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">DJJ (bpm)</label>
+                  <input type="number" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={djj} onChange={(e) => setDjj(e.target.value)} required />
+                </div>
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black text-gray-400 uppercase ml-2 tracking-widest text-pink-500">DJJ (bpm)</label>
-                <input type="number" className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-pink-500 font-bold border border-gray-100" value={jantung} onChange={(e) => setJantung(e.target.value)} placeholder="0" required />
+                <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Palpasi / Letak Janin</label>
+                <input type="text" placeholder="Kepala / Sungsang" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={palpasi} onChange={(e) => setPalpasi(e.target.value)} required />
               </div>
             </div>
 
-            <button disabled={loading} className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black shadow-xl hover:bg-rose-600 active:scale-95 transition-all mt-4 uppercase tracking-widest text-xs">
+            {/* SEKSI 3: TINDAKAN */}
+            <div className="space-y-4 pt-4 border-t border-dashed">
+              <h2 className="text-[10px] font-black text-pink-500 bg-pink-50 p-2 px-3 rounded-full inline-block uppercase tracking-widest">3. Tindakan & Skrining</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Tablet Fe</label>
+                  <input type="text" placeholder="Ya / Tidak" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={fe} onChange={(e) => setFe(e.target.value)} required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Imunisasi TT</label>
+                  <input type="text" placeholder="TT1 / TT2" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tt} onChange={(e) => setTt(e.target.value)} required />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Hasil Skrining / Keterangan</label>
+                <textarea rows={2} className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={skrining} onChange={(e) => setSkrining(e.target.value)} />
+              </div>
+            </div>
+
+            <button disabled={loading} className="w-full bg-gray-900 text-white py-5 rounded-3xl font-black uppercase text-xs shadow-xl active:scale-95 transition-all">
               {loading ? 'Menyimpan...' : 'Simpan Pemeriksaan'}
             </button>
           </form>
         </div>
 
-        {/* SECTION RIWAYAT (HISTORY) */}
+        {/* SEKSI RIWAYAT PEMERIKSAAN */}
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-gray-400 uppercase tracking-[0.2em] ml-4 italic">Riwayat Pemeriksaan</h2>
-          
+          <div className="flex items-center justify-between px-2">
+            <h3 className="text-sm font-black text-gray-900 uppercase tracking-tighter">Riwayat Pemeriksaan</h3>
+            <span className="bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase">
+              {riwayat.length} Total
+            </span>
+          </div>
+
           {riwayat.length === 0 ? (
-            <div className="bg-white p-10 rounded-[2.5rem] border-2 border-dashed border-gray-100 text-center">
-              <p className="text-gray-300 font-bold text-xs uppercase italic tracking-widest">Belum ada data history.</p>
+            <div className="bg-white p-8 rounded-[2rem] text-center border-2 border-dashed border-gray-100">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Belum ada data pemeriksaan</p>
             </div>
           ) : (
-            riwayat.map((item, index) => (
-              <div key={item.id || index} className="bg-white p-6 rounded-[2rem] shadow-md border border-gray-100 flex justify-between items-center relative overflow-hidden">
-                {/* Aksen nomor urut kecil di pojok */}
-                <span className="absolute -left-2 -top-2 text-4xl font-black text-pink-50 opacity-50 italic">#{riwayat.length - index}</span>
-                
-                <div className="z-10">
-                  <p className="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-1">{item.tgl_periksa}</p>
-                  <div className="flex gap-4">
-                    <div>
-                      <span className="block text-[8px] font-bold text-gray-400 uppercase">BB</span>
-                      <span className="font-black text-gray-700">{item.berat_badan}kg</span>
-                    </div>
-                    <div>
-                      <span className="block text-[8px] font-bold text-gray-400 uppercase">Perut</span>
-                      <span className="font-black text-gray-700">{item.lingkar_perut}cm</span>
-                    </div>
-                    <div>
-                        <span className="block text-[8px] font-bold text-gray-400 uppercase tracking-tighter">DJJ (bpm)</span>
-                        <span className={`font-black ${item.detak_jantung < 120 || item.detak_jantung > 160 ? 'text-red-600 animate-pulse' : 'text-gray-700'}`}>
-                            {item.detak_jantung} {item.detak_jantung < 120 || item.detak_jantung > 160 ? '⚠️' : ''}
-                        </span>
-                    </div>
+            <div className="space-y-4">
+              {riwayat.map((item, index) => (
+                <div key={index} className="bg-white rounded-[2rem] shadow-md border border-gray-100 overflow-hidden">
+                  {/* Header Riwayat (Tanggal & Kunjungan ke-X) */}
+                  <div className="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center">
+                    <p className="text-[10px] font-black text-gray-900 uppercase tracking-widest">
+                      📅 {new Date(item.tgl_periksa).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </p>
+                    <span className="text-[9px] font-bold text-gray-400 uppercase">Kunjungan #{riwayat.length - index}</span>
                   </div>
-                </div>
 
-                <div className="text-right">
-                  <div className="bg-rose-50 px-3 py-1 rounded-full">
-                    <span className="text-[10px] font-black text-rose-500 italic uppercase">LiLA: {item.lingkar_lengan}</span>
+                  {/* Body Riwayat (10 Data) */}
+                  <div className="p-6 grid grid-cols-2 gap-y-4 gap-x-6">
+                    {/* Fisik Ibu */}
+                    <div className="col-span-2 flex items-center gap-2 mb-[-8px]">
+                      <div className="h-[2px] w-4 bg-pink-500 rounded-full"></div>
+                      <p className="text-[9px] font-black text-pink-500 uppercase tracking-tighter">Status Ibu</p>
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-bold text-gray-400 uppercase">BB / TB</p>
+                      <p className="text-xs font-black text-gray-800">{item.berat_badan}kg / {item.tinggi_badan}cm</p>
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-bold text-gray-400 uppercase">Tensi / LiLA</p>
+                      <p className="text-xs font-black text-gray-800">{item.tensi_darah} / {item.lila}cm</p>
+                    </div>
+
+                    {/* Janin */}
+                    <div className="col-span-2 flex items-center gap-2 mb-[-8px] mt-2">
+                      <div className="h-[2px] w-4 bg-blue-500 rounded-full"></div>
+                      <p className="text-[9px] font-black text-blue-500 uppercase tracking-tighter">Status Janin</p>
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-bold text-gray-400 uppercase">T. Fundus / DJJ</p>
+                      <p className="text-xs font-black text-gray-800">{item.tinggi_fundus}cm / {item.djj}bpm</p>
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-bold text-gray-400 uppercase">Letak Janin</p>
+                      <p className="text-xs font-black text-gray-800 uppercase">{item.letak_janin}</p>
+                    </div>
+
+                    {/* Tindakan */}
+                    <div className="col-span-2 flex items-center gap-2 mb-[-8px] mt-2">
+                      <div className="h-[2px] w-4 bg-green-500 rounded-full"></div>
+                      <p className="text-[9px] font-black text-green-500 uppercase tracking-tighter">Tindakan & Skrining</p>
+                    </div>
+                    <div>
+                      <p className="text-[8px] font-bold text-gray-400 uppercase">Tablet Fe / TT</p>
+                      <p className="text-xs font-black text-gray-800 uppercase">{item.tablet_fe} / {item.imunisasi_tt}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className="text-[8px] font-bold text-gray-400 uppercase">Hasil Skrining</p>
+                      <p className="text-[10px] font-bold text-gray-600 italic bg-gray-50 p-2 rounded-xl mt-1 border border-gray-100">
+                        "{item.skrining || 'Tidak ada keterangan'}"
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
-        <button 
-          type="button" 
-          onClick={() => router.push('/daftar-balita?tab=ibu')} 
-          className="w-full py-4 bg-white border-2 border-pink-100 text-pink-500 rounded-2xl font-black text-xs uppercase tracking-widest shadow-sm hover:bg-pink-50 mt-10"
-        >
-          ← Kembali ke Daftar
-        </button>
+
+        <button onClick={() => router.back()} className="w-full py-4 bg-white border-2 border-pink-100 text-pink-500 rounded-2xl font-black text-[10px] uppercase tracking-widest">← Kembali</button>
       </div>
     </main>
   )
