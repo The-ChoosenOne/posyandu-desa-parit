@@ -139,34 +139,37 @@ export default function DetailTimbangBalita() {
         </form>
       </div>
 
-      <button 
-        onClick={() => router.back()}
-        className="block mx-auto mt-6 text-gray-400 font-bold text-sm hover:text-gray-600"
-      >
-        ← Kembali ke Daftar
-      </button>
+      
         <div className="max-w-md mx-auto mt-10 space-y-4">
         <h2 className="text-lg font-black text-gray-800 ml-2">Riwayat Pertumbuhan</h2>
-        {riwayat.length === 0 ? (
-            <p className="text-center text-gray-400 py-10 bg-white rounded-3xl border-2 border-dashed border-gray-100">Belum ada catatan timbangan.</p>
-        ) : (
-            riwayat.map((item, index) => (
-                <div key={index} className="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex justify-between items-center">
-                    <div>
-                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{new Date(item.tgl_timbang).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}</p>
-                        <div className="flex gap-4 mt-1">
-                            <span className="text-sm font-black text-green-600">⚖️ {item.berat_badan}kg</span>
-                            <span className="text-sm font-black text-blue-600">📏 {item.tinggi_badan}cm</span>
+            {riwayat.length === 0 ? (
+                <p className="text-center text-gray-400 py-10 bg-white rounded-3xl border-2 border-dashed border-gray-100">Belum ada catatan timbangan.</p>
+            ) : (
+                riwayat.map((item, index) => (
+                    <div key={index} className="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 flex justify-between items-center">
+                        <div>
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{new Date(item.tgl_timbang).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}</p>
+                            <div className="flex gap-4 mt-1">
+                                <span className="text-sm font-black text-green-600">⚖️ {item.berat_badan}kg</span>
+                                <span className="text-sm font-black text-blue-600">📏 {item.tinggi_badan}cm</span>
+                            </div>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-[10px] font-bold text-gray-300 uppercase">Lingkar</p>
+                            <p className="font-bold text-gray-600">{item.lingkar_kepala}cm</p>
                         </div>
                     </div>
-                    <div className="text-right">
-                        <p className="text-[10px] font-bold text-gray-300 uppercase">Lingkar</p>
-                        <p className="font-bold text-gray-600">{item.lingkar_kepala}cm</p>
-                    </div>
-                </div>
-            ))
-        )}
-    </div>
+                ))
+            )}
+        </div>
+        <div className="max-w-md mx-auto mt-8">
+          <button 
+            onClick={() => router.back()}
+            className="w-full py-4 bg-white border-2 border-green-100 text-green-600 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-sm hover:bg-green-50 transition-all active:scale-95"
+          >
+            ← Kembali ke Daftar
+          </button>
+        </div>
     </main>
   )
 }

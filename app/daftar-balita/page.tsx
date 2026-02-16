@@ -27,8 +27,8 @@ function DaftarContent() {
 
     // 2. Ambil Data Balita
     const { data: dataBalita } = await supabase
-      .from('timbangans')
-      .select(`*, balitas(nama_anak, nik)`)
+      .from('pengukurans') // Pakai 's' sesuai gambar di Supabase kamu
+      .select(`*, balitas(nama_anak, nik, nama_ortu, imunisasi)`)
       .gte('tgl_timbang', `${bulanIni}-01`)
 
     if ((!dataIbu || dataIbu.length === 0) && (!dataBalita || dataBalita.length === 0)) {
@@ -58,6 +58,8 @@ function DaftarContent() {
       'Tanggal': row.tgl_timbang,
       'Nama Anak': row.balitas?.nama_anak,
       'NIK': row.balitas?.nik,
+      'Ortu': row.balitas?.nama_ortu,
+      'Imunisasi': row.balitas?.imunisasi,
       'BB (kg)': row.berat_badan,
       'TB (cm)': row.tinggi_badan,
       'LK (cm)': row.lingkar_kepala
@@ -88,15 +90,16 @@ function DaftarContent() {
     ambilData()
   }, [kategori])
 
-  // 2. EFFECT STATISTIK GABUNGAN
+// 2. EFFECT STATISTIK GABUNGAN
   useEffect(() => {
     async function ambilStats() {
+      // Ambil total pendaftaran
       const { count: cBalita } = await supabase.from('balitas').select('*', { count: 'exact', head: true })
       const { count: cIbu } = await supabase.from('ibu_hamil').select('*', { count: 'exact', head: true })
       
       // Ambil total pelayanan (Pemeriksaan Ibu + Timbangan Balita)
       const { count: rIbu } = await supabase.from('pemeriksaan_ibu').select('*', { count: 'exact', head: true })
-      const { count: rBalita } = await supabase.from('timbangans').select('*', { count: 'exact', head: true })
+      const { count: rBalita } = await supabase.from('pengukurans').select('*', { count: 'exact', head: true })
 
       setStats({ 
         balita: cBalita || 0, 
@@ -104,7 +107,12 @@ function DaftarContent() {
         periksa: (rIbu || 0) + (rBalita || 0) 
       })
     }
+    
     ambilStats()
+    
+    // Tips: Tambahkan interval dikit biar dia ngecek data secara berkala
+    const interval = setInterval(ambilStats, 5000) 
+    return () => clearInterval(interval)
   }, [])
 
   const filteredData = balitas.filter((item) => {

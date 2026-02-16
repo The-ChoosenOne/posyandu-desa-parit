@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <>
       {/* 1. Desktop Navbar (Atas - Muncul di Laptop) */}
-      <nav className="hidden md:flex fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50 px-10 py-4 justify-between items-center">
+      <nav className="hidden md:flex fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50 px-25 py-4 justify-between items-center">
         <h1 className="text-xl font-black text-green-600">POSYANDU <span className="text-gray-800">PARIT</span></h1>
         <div className="flex items-center gap-8">
           {menu.map((item) => (

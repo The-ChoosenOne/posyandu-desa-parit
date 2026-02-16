@@ -13,6 +13,7 @@ export default function TambahBalita() {
     
     const [loading, setLoading] = useState(false)
     const [checking, setChecking] = useState(true)
+    const [imunisasi, setImunisasi] = useState('')
 
     useEffect(() => {
         const cekUser = async () => {
@@ -33,7 +34,8 @@ export default function TambahBalita() {
                 nama_anak: nama, 
                 nik: nik,
                 nama_ortu: namaOrtu, 
-                tgl_lahir: tglLahir 
+                tgl_lahir: tglLahir,
+                imunisasi: imunisasi
             }
         ])
 
@@ -82,6 +84,16 @@ export default function TambahBalita() {
                     <div className="space-y-1">
                         <label className="text-[10px] font-black text-green-600 uppercase ml-2 tracking-widest">Tanggal Lahir</label>
                         <input type="date" className="w-full p-4 bg-gray-50 text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-green-500 border border-gray-100 font-bold" value={tglLahir} onChange={(e) => setTglLahir(e.target.value)} required />
+                    </div>
+                    <div className="space-y-1">
+                    <label className="text-[10px] font-black text-green-600 uppercase ml-2 tracking-widest">Riwayat Imunisasi</label>
+                    <input 
+                        type="text" 
+                        placeholder="Contoh: BCG, Polio 1, DPT..." 
+                        className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" 
+                        value={imunisasi} 
+                        onChange={(e) => setImunisasi(e.target.value)} 
+                    />
                     </div>
 
                     <button disabled={loading} className="w-full bg-green-600 text-white py-5 rounded-2xl font-black shadow-xl shadow-green-100 uppercase tracking-widest text-xs transition-all active:scale-95 hover:bg-green-700 mt-4">

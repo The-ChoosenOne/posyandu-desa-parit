@@ -6,7 +6,7 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       {/* NAVBAR KHUSUS LANDING PAGE */}
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🌱</span>
             <h1 className="text-xl font-black text-green-600 tracking-tighter uppercase">Posyandu Parit</h1>

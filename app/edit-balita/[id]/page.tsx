@@ -11,9 +11,9 @@ function EditContent() {
   
   const [nama, setNama] = useState('')
   const [nik, setNik] = useState('')
-  // State Tambahan Baru
-  const [namaTambahan, setNamaTambahan] = useState('') // Untuk Nama Ortu / Suami
-  const [tglTambahan, setTglTambahan] = useState('')   // Untuk Tgl Lahir / HPHT
+  const [namaTambahan, setNamaTambahan] = useState('') 
+  const [tglTambahan, setTglTambahan] = useState('')   
+  const [imunisasi, setImunisasi] = useState('') // <-- State Baru
 
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
@@ -27,9 +27,10 @@ function EditContent() {
       if (data) {
         setNama(isIbu ? data.nama_ibu : data.nama_anak)
         setNik(data.nik)
-        // Ambil data tambahan
-        setNamaTambahan(isIbu ? data.nama_suami : data.nama_ortu)
-        setTglTambahan(isIbu ? data.hpht : data.tgl_lahir)
+        setNamaTambahan(isIbu ? data.nama_suami : data.nama_ortu || '')
+        setTglTambahan(isIbu ? data.hpht : data.tgl_lahir || '')
+        // Ambil data imunisasi kalau dia balita
+        if (!isIbu) setImunisasi(data.imunisasi || '')
       }
       setFetching(false)
     }
@@ -40,10 +41,10 @@ function EditContent() {
     e.preventDefault()
     setLoading(true)
 
-    // Bungkus data update sesuai kategori
+    // Bungkus data update sesuai kategori (Tambah imunisasi di bagian balita)
     const updateData = isIbu 
       ? { nama_ibu: nama, nik: nik, nama_suami: namaTambahan, hpht: tglTambahan } 
-      : { nama_anak: nama, nik: nik, nama_ortu: namaTambahan, tgl_lahir: tglTambahan }
+      : { nama_anak: nama, nik: nik, nama_ortu: namaTambahan, tgl_lahir: tglTambahan, imunisasi: imunisasi }
 
     const { error } = await supabase.from(tabelName).update(updateData).eq('id', id)
     
@@ -73,7 +74,7 @@ function EditContent() {
     }
   }
 
-  if (fetching) return <p className="pt-32 text-center italic font-black text-gray-400">MEMUAT DATA...</p>
+  if (fetching) return <p className="pt-32 text-center italic font-black text-gray-400 uppercase animate-pulse">Memuat Data...</p>
 
   return (
     <main className="min-h-screen bg-gray-50 pt-32 p-6 pb-32">
@@ -107,6 +108,20 @@ function EditContent() {
             </label>
             <input type="date" className={`w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-${colorTheme}-500 font-bold border border-gray-100`} value={tglTambahan} onChange={(e) => setTglTambahan(e.target.value)} required />
           </div>
+
+          {/* INPUT IMUNISASI (Cuma muncul buat Balita) */}
+          {!isIbu && (
+            <div className="space-y-1 pt-2 border-t border-dashed">
+              <label className="text-[10px] font-black text-green-600 uppercase tracking-widest ml-2">Riwayat Imunisasi</label>
+              <textarea 
+                placeholder="Contoh: BCG, Polio 1, DPT..." 
+                className="w-full p-4 bg-white text-gray-900 rounded-2xl outline-none focus:ring-2 focus:ring-green-500 font-bold border border-gray-100" 
+                value={imunisasi} 
+                onChange={(e) => setImunisasi(e.target.value)}
+                rows={2}
+              />
+            </div>
+          )}
 
           <button disabled={loading} className="w-full bg-gray-900 text-white py-5 rounded-2xl font-black uppercase text-xs shadow-xl active:scale-95 transition-all">
             {loading ? 'Menyimpan...' : 'Update Profil'}
