@@ -96,21 +96,21 @@ export default function PeriksaIbuHamil() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">BB (kg)</label>
-                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={bb} onChange={(e) => setBb(e.target.value)} required />
+                  <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={bb} onChange={(e) => setBb(e.target.value)} required />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">TB (cm)</label>
-                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tb} onChange={(e) => setTb(e.target.value)} required />
+                  <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={tb} onChange={(e) => setTb(e.target.value)} required />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Tensi (mmHg)</label>
-                  <input type="text" placeholder="120/80" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tensi} onChange={(e) => setTensi(e.target.value)} required />
+                  <input type="text" placeholder="120/80" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={tensi} onChange={(e) => setTensi(e.target.value)} required />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">LiLA (cm)</label>
-                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={lila} onChange={(e) => setLila(e.target.value)} required />
+                  <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={lila} onChange={(e) => setLila(e.target.value)} required />
                 </div>
               </div>
             </div>
@@ -121,16 +121,16 @@ export default function PeriksaIbuHamil() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">T. Fundus (cm)</label>
-                  <input type="number" step="0.1" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tfu} onChange={(e) => setTfu(e.target.value)} required />
+                  <input type="number" step="0.1" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={tfu} onChange={(e) => setTfu(e.target.value)} required />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">DJJ (bpm)</label>
-                  <input type="number" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={djj} onChange={(e) => setDjj(e.target.value)} required />
+                  <input type="number" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={djj} onChange={(e) => setDjj(e.target.value)} required />
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Palpasi / Letak Janin</label>
-                <input type="text" placeholder="Kepala / Sungsang" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={palpasi} onChange={(e) => setPalpasi(e.target.value)} required />
+                <input type="text" placeholder="Kepala / Sungsang" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={palpasi} onChange={(e) => setPalpasi(e.target.value)} required />
               </div>
             </div>
 
@@ -140,16 +140,16 @@ export default function PeriksaIbuHamil() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Tablet Fe</label>
-                  <input type="text" placeholder="Ya / Tidak" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={fe} onChange={(e) => setFe(e.target.value)} required />
+                  <input type="text" placeholder="Ya / Tidak" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={fe} onChange={(e) => setFe(e.target.value)} required />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Imunisasi TT</label>
-                  <input type="text" placeholder="TT1 / TT2" className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={tt} onChange={(e) => setTt(e.target.value)} required />
+                  <input type="text" placeholder="TT1 / TT2" className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={tt} onChange={(e) => setTt(e.target.value)} required />
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="text-[9px] font-black text-gray-400 uppercase ml-2">Hasil Skrining / Keterangan</label>
-                <textarea rows={2} className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={skrining} onChange={(e) => setSkrining(e.target.value)} />
+                <textarea rows={2} className="w-full p-4 bg-white text-gray-900 rounded-2xl border border-gray-100 font-bold" value={skrining} onChange={(e) => setSkrining(e.target.value)} />
               </div>
             </div>
 
